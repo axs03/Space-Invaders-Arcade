@@ -5,57 +5,55 @@
 //  Created by Aman Sahu on 12/2/24.
 //
 
-#include <iostream>
 #include "/opt/local/include/GL/glut.h"
+#include "Player.h"
+#include "Projectile.h"
+#include "Enemy.h"
+#include "Game.h"
+#include "utils.h"
 
 using namespace std;
 
-void display()
-{
+Player player = {400.0f, 50.0f, 50.0f, 20.0f};
+vector<Projectile> bullets;
+vector<Enemy> enemies;
+
+void display() {
     glClear(GL_COLOR_BUFFER_BIT);
-
-    glBegin(GL_POLYGON);
-    glVertex2f(-0.5, -0.5);
-    glVertex2f(-0.5, 0.5);
-    glVertex2f(0.5, 0.5);
-    glVertex2f(0.5, -0.5);
-    glEnd();
-
+    drawPlayer(player);
+    drawBullets(bullets);
+    drawEnemies(enemies);
     glFlush();
 }
 
-void display_two() {
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    glBegin(GL_POLYGON);
-    glVertex3f(1.0, 0.0, 0.0);
-    glVertex3f(1.0, 1.0, 0.0);
-    glVertex3f(1.0, 0.0, 1.0);
-    glEnd();
-    
-    glFlush();
+void timer(int value) {
+    updateBullets(bullets);
+    updateEnemies(enemies);
+    checkCollisions(bullets, enemies);
+
+    if (rand() % 100 < 10) spawnEnemy(enemies);
+
+    glutPostRedisplay();
+    glutTimerFunc(16, timer, 0);
 }
 
-void init()
-{
-    glClearColor(0.000, 0.110, 0.392, 0.0); // JMU Gold
-
-    glColor3f(0.314, 0.314, 0.000); // JMU Purpleq
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
+void keyboard(unsigned char key, int x, int y) {
+    if (key == 'a' || key == 'd') movePlayer(player, key);
+    if (key == ' ') fireBullet(bullets, player.x, player.y, player.width);
+    glutPostRedisplay();
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize(640, 480);
-    glutInitWindowPosition(0, 0);
-    glutCreateWindow("Main");
-    glutDisplayFunc(display_two);
-    init();
-    glutMainLoop();
-}
+    glutInitWindowSize(800, 600);
+    glutCreateWindow("Blastar");
 
+    init();
+    glutDisplayFunc(display);
+    glutKeyboardFunc(keyboard);
+    glutTimerFunc(16, timer, 0);
+
+    glutMainLoop();
+    return 0;
+}
