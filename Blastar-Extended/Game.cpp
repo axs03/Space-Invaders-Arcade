@@ -12,13 +12,12 @@ using namespace std;
 
 void init() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
-
     glColor3f(1.0, 1.0, 1.0);
-
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0.0, 800.0, 0.0, 600.0); // (0,0) to (800,600)
+    gluOrtho2D(0.0, 800.0, 0.0, 600.0);
 }
+
 
 void checkCollisions(vector<Projectile>& bullets, vector<Enemy>& enemies) {
     for (auto& bullet : bullets) {

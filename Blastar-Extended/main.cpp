@@ -14,9 +14,12 @@
 
 using namespace std;
 
-Player player = {400.0f, 50.0f, 50.0f, 20.0f};
+Player player = {400.0f, 50.0f, 50.0f, 50.0f};
 vector<Projectile> bullets;
 vector<Enemy> enemies;
+
+bool leftKeyPressed = false;
+bool rightKeyPressed = false;
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -27,20 +30,30 @@ void display() {
 }
 
 void timer(int value) {
+    // player position based
+    movePlayer(player, leftKeyPressed, rightKeyPressed);
+
+    // bullets and enemies
     updateBullets(bullets);
     updateEnemies(enemies);
     checkCollisions(bullets, enemies);
 
-    if (rand() % 100 < 10) spawnEnemy(enemies);
+    // new enemy occasionally
+    if (rand() % 100 < 5) spawnEnemy(enemies);
 
     glutPostRedisplay();
     glutTimerFunc(16, timer, 0);
 }
 
-void keyboard(unsigned char key, int x, int y) {
-    if (key == 'a' || key == 'd') movePlayer(player, key);
+void keyboardDown(unsigned char key, int x, int y) {
+    if (key == 'a') leftKeyPressed = true;
+    if (key == 'd') rightKeyPressed = true;
     if (key == ' ') fireBullet(bullets, player.x, player.y, player.width);
-    glutPostRedisplay();
+}
+
+void keyboardUp(unsigned char key, int x, int y) {
+    if (key == 'a') leftKeyPressed = false;
+    if (key == 'd') rightKeyPressed = false;
 }
 
 int main(int argc, char** argv) {
@@ -51,7 +64,8 @@ int main(int argc, char** argv) {
 
     init();
     glutDisplayFunc(display);
-    glutKeyboardFunc(keyboard);
+    glutKeyboardFunc(keyboardDown);
+    glutKeyboardUpFunc(keyboardUp);
     glutTimerFunc(16, timer, 0);
 
     glutMainLoop();

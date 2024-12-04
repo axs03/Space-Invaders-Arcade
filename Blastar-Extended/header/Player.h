@@ -9,10 +9,11 @@
 #define PLAYER_H
 
 struct Player {
-    float x, y, width, height;
+    float x, y;
+    float width, height;
 };
 
 void drawPlayer(const Player& player);
-void movePlayer(Player& player, char direction);
+void movePlayer(Player& player, bool leftKeyPressed, bool rightKeyPressed);
 
 #endif
