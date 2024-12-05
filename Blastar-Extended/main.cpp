@@ -10,6 +10,7 @@
 #include "Projectile.h"
 #include "Enemy.h"
 #include "Game.h"
+#include "Explosion.h"
 #include "utils.h"
 
 using namespace std;
@@ -17,6 +18,7 @@ using namespace std;
 Player player = {400.0f, 50.0f, 50.0f, 50.0f};
 vector<Projectile> bullets;
 vector<Enemy> enemies;
+vector<Explosion> explosions;
 
 bool leftKeyPressed = false;
 bool rightKeyPressed = false;
@@ -26,21 +28,26 @@ void display() {
     drawPlayer(player);
     drawBullets(bullets);
     drawEnemies(enemies);
+
+    // Draw explosions
+    for (const auto& explosion : explosions) {
+        drawExplosion(explosion);
+    }
+
     glFlush();
 }
 
 void timer(int value) {
-    // player position based
     movePlayer(player, leftKeyPressed, rightKeyPressed);
-
-    // bullets and enemies
     updateBullets(bullets);
     updateEnemies(enemies);
-    checkCollisions(bullets, enemies);
+    updateExplosions(explosions);
 
-    // new enemy occasionally
-    if (rand() % 100 < 5) spawnEnemy(enemies);
+    checkCollisions(bullets, enemies, explosions);
 
+    if (rand() % 100 < 5) {
+        spawnEnemy(enemies);
+    }
     glutPostRedisplay();
     glutTimerFunc(16, timer, 0);
 }
@@ -60,7 +67,7 @@ int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(800, 600);
-    glutCreateWindow("Blastar");
+    glutCreateWindow("Blastar Extended");
 
     init();
     glutDisplayFunc(display);
@@ -71,3 +78,4 @@ int main(int argc, char** argv) {
     glutMainLoop();
     return 0;
 }
+

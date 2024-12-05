@@ -26,13 +26,26 @@ void updateBullets(vector<Projectile>& bullets) {
 
 void drawBullets(const vector<Projectile>& bullets) {
     for (const auto& bullet : bullets) {
-        if (bullet.active) {
-            glBegin(GL_POLYGON);
-            glVertex2f(bullet.x, bullet.y);
-            glVertex2f(bullet.x + bullet.width, bullet.y);
-            glVertex2f(bullet.x + bullet.width, bullet.y + bullet.height);
-            glVertex2f(bullet.x, bullet.y + bullet.height);
-            glEnd();
+        if (!bullet.active) continue;
+
+        glColor4f(1.0, 1.0, 0.0, 0.5); // yellow
+        glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(bullet.x + bullet.width / 2, bullet.y + bullet.height / 2);
+        for (int i = 0; i <= 20; ++i) {
+            float angle = i * 2.0f * 3.14159f / 20;
+            float radius = bullet.width * 1.5f;
+            glVertex2f(bullet.x + bullet.width / 2 + cos(angle) * radius,
+                       bullet.y + bullet.height / 2 + sin(angle) * radius);
         }
+        glEnd();
+
+        glColor3f(1.0, 0.0, 0.0); // red
+        glBegin(GL_QUADS);
+        glVertex2f(bullet.x, bullet.y);
+        glVertex2f(bullet.x + bullet.width, bullet.y);
+        glVertex2f(bullet.x + bullet.width, bullet.y + bullet.height);
+        glVertex2f(bullet.x, bullet.y + bullet.height);
+        glEnd();
     }
 }
+

@@ -9,11 +9,14 @@
 #define GAME_H
 
 #include <vector>
-#include "player.h"
-#include "projectile.h"
-#include "enemy.h"
+#include "Player.h"
+#include "Projectile.h"
+#include "Enemy.h"
+#include "Explosion.h"
+
+using namespace std;
 
 void init();
-void checkCollisions(vector<Projectile>& bullets, vector<Enemy>& enemies);
+void checkCollisions(vector<Projectile>& bullets,vector<Enemy>& enemies,vector<Explosion>& explosions);
 
 #endif
