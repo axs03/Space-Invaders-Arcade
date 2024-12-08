@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void init();
+void init(Player& player, vector<Enemy>& enemies);
 void checkCollisions(vector<Projectile>& bullets,vector<Enemy>& enemies,vector<Explosion>& explosions);
 
 #endif

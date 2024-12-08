@@ -12,6 +12,7 @@
 #include "Game.h"
 #include "Explosion.h"
 #include "utils.h"
+#include "TextureLoader.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ bool rightKeyPressed = false;
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
-    drawPlayer(player);
+    drawPlayer(player, 180);
     drawBullets(bullets);
     drawEnemies(enemies);
 
@@ -69,7 +70,7 @@ int main(int argc, char** argv) {
     glutInitWindowSize(800, 600);
     glutCreateWindow("Blastar Extended");
 
-    init();
+    init(player, enemies);
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboardDown);
     glutKeyboardUpFunc(keyboardUp);

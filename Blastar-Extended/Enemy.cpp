@@ -11,12 +11,12 @@
 
 using namespace std;
 
-void spawnEnemy(std::vector<Enemy>& enemies) {
+void spawnEnemy(vector<Enemy>& enemies) {
     Enemy enemy = {static_cast<float>(rand() % 750), 580.0f, 50.0f, 50.0f, true};
     enemies.push_back(enemy);
 }
 
-void updateEnemies(std::vector<Enemy>& enemies) {
+void updateEnemies(vector<Enemy>& enemies) {
     for (auto& enemy : enemies) {
         if (enemy.active) {
             enemy.y -= 2.0f;
@@ -25,20 +25,39 @@ void updateEnemies(std::vector<Enemy>& enemies) {
     }
 }
 
-void drawEnemies(const std::vector<Enemy>& enemies) {
-    for (const auto& enemy : enemies) {
-        if (enemy.active) {
-            glColor3f(1.0, 0.0, 0.0);
-            float radius = enemy.width / 2;
 
-            glBegin(GL_TRIANGLE_FAN);
-            glVertex2f(enemy.x + radius, enemy.y + radius); // center
-            for (int i = 0; i <= 20; ++i) {
-                float angle = i * 2.0f * 3.14159f / 20;
-                glVertex2f(enemy.x + radius + radius * cos(angle), enemy.y + radius + radius * sin(angle));
-            }
-            glEnd();
-        }
+void drawEnemies(const vector<Enemy>& enemies) {
+    glEnable(GL_TEXTURE_2D);
+
+    for (const auto& enemy : enemies) {
+        if (!enemy.active) continue;
+
+        glPushMatrix();
+        
+        
+        glTranslatef(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 0.0f);
+
+        // Rotate 180 degrees
+        glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
+
+        
+        glTranslatef(-enemy.width / 2, -enemy.height / 2, 0.0f);
+
+        glBindTexture(GL_TEXTURE_2D, enemy.textureID);
+
+        
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
+        glTexCoord2f(1.0f, 0.0f); glVertex2f(enemy.width, 0.0f);
+        glTexCoord2f(1.0f, 1.0f); glVertex2f(enemy.width, enemy.height);
+        glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, enemy.height);
+        glEnd();
+
+        glPopMatrix();
     }
+
+    glDisable(GL_TEXTURE_2D);
 }
+
+
 

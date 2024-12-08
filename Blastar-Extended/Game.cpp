@@ -7,11 +7,12 @@
 
 #include "Game.h"
 #include "Explosion.h"
+#include "TextureLoader.h"
 #include "/opt/local/include/GL/glut.h"
 
 using namespace std;
 
-void init() {
+void init(Player& player, vector<Enemy>& enemies) {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glColor3f(1.0, 1.0, 1.0);
     glMatrixMode(GL_PROJECTION);
@@ -19,6 +20,11 @@ void init() {
     gluOrtho2D(0.0, 800.0, 0.0, 600.0);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    player.textureID = loadTexture("/Users/amansahu/Documents/Fall 2024/CMPSC 457/Final-Project/Blastar-Extended/Blastar-Extended/images/player.png");
+    for (auto& enemy : enemies) {
+        enemy.textureID = loadTexture("/Users/amansahu/Documents/Fall 2024/CMPSC 457/Final-Project/Blastar-Extended/Blastar-Extended/images/enemy.png");
+    }
 }
 
 

@@ -8,12 +8,14 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include "/opt/local/include/GL/glut.h"
 #include <vector>
 using namespace std;
 
 struct Enemy {
     float x, y, width, height;
     bool active;
+    GLuint textureID;
 };
 
 void spawnEnemy(vector<Enemy>& enemies);
