@@ -32,6 +32,7 @@ void display() {
 
     // Draw explosions
     for (const auto& explosion : explosions) {
+        updateExplosionLight(explosion);
         drawExplosion(explosion);
     }
 

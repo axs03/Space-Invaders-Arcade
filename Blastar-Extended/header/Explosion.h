@@ -20,5 +20,6 @@ struct Explosion {
 
 void drawExplosion(const Explosion& explosion);
 void updateExplosions(vector<Explosion>& explosions);
+void updateExplosionLight(const Explosion& explosion);
 
 #endif

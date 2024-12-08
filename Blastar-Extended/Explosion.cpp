@@ -15,15 +15,21 @@ using namespace std;
 void drawExplosion(const Explosion& explosion) {
     if (!explosion.active) return;
 
-    glColor4f(1.0, 0.5, 0.0, 0.5); // orange
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(explosion.x, explosion.y); // center
-    for (int i = 0; i <= 20; ++i) {
-        float angle = i * 2.0f * 3.14159f / 20;
-        glVertex2f(explosion.x + explosion.radius * cos(angle),
-                   explosion.y + explosion.radius * sin(angle));
-    }
-    glEnd();
+    glPushMatrix();
+    glTranslatef(explosion.x, explosion.y, 0.0f);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+    GLfloat emissionColor[] = {1.0f, 0.5f, 0.0f, 1.0f}; // Orange glow
+    glMaterialfv(GL_FRONT, GL_EMISSION, emissionColor);
+
+    glColor4f(1.0f, 0.5f, 0.0f, 0.8f); // Bright orange with transparency
+    glutSolidSphere(explosion.radius, 20, 20);
+
+    GLfloat noEmission[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    glMaterialfv(GL_FRONT, GL_EMISSION, noEmission);
+    glDisable(GL_BLEND);
+    glPopMatrix();
 }
 
 void updateExplosions(vector<Explosion>& explosions) {
@@ -33,4 +39,17 @@ void updateExplosions(vector<Explosion>& explosions) {
         explosion.radius += 2.0f;
         if (explosion.radius > 50.0f) explosion.active = false;
     }
+}
+
+void updateExplosionLight(const Explosion& explosion) {
+    if (!explosion.active) return;
+
+    GLfloat lightPos[] = {explosion.x, explosion.y, 1.0f, 1.0f};
+    GLfloat lightColor[] = {1.0f, 0.5f, 0.0f, 1.0f}; // Orange light
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT1);
+
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, lightColor);
 }
