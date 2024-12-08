@@ -6,8 +6,7 @@
 //
 
 #include "Enemy.h"
-#include "/opt/local/include/GL/glut.h"
-#include <cstdlib>
+
 
 using namespace std;
 

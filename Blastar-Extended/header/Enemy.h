@@ -10,6 +10,8 @@
 
 #include "/opt/local/include/GL/glut.h"
 #include <vector>
+#include <cstdlib>
+
 using namespace std;
 
 struct Enemy {
