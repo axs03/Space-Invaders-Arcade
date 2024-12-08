@@ -19,7 +19,5 @@ struct Player {
 void drawPlayer(const Player& player, float rotationAngle);
 void movePlayer(Player& player, bool leftKeyPressed, bool rightKeyPressed);
 void updatePlayerLight(const Player& player);
-void drawPlayerAura(const Player& player);
-void updateGlowIntensity();
 
 #endif

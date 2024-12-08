@@ -35,38 +35,6 @@ void drawPlayer(const Player& player, float rotationAngle) {
 
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
-
-    drawPlayerAura(player);
-}
-
-
-float glowIntensity = 0.5f;
-bool increasing = true;
-
-void updateGlowIntensity() {
-    if (increasing) {
-        glowIntensity += 0.01f;
-        if (glowIntensity >= 1.0f) increasing = false;
-    } else {
-        glowIntensity -= 0.01f;
-        if (glowIntensity <= 0.5f) increasing = true;
-    }
-}
-
-void drawPlayerAura(const Player& player) {
-    glPushMatrix();
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-
-    glColor4f(0.5f, 0.5f, 1.0f, glowIntensity);
-    float auraRadius = player.width * 1.5f;
-
-    glTranslatef(player.x + player.width / 2.0f, player.y + player.height / 2.0f, 0.0f);
-    glutSolidSphere(auraRadius, 150, 150);
-    glDisable(GL_BLEND);
-
-    glPopMatrix();
 }
 
 

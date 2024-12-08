@@ -46,10 +46,15 @@ void updateExplosionLight(const Explosion& explosion) {
 
     GLfloat lightPos[] = {explosion.x, explosion.y, 1.0f, 1.0f};
     GLfloat lightColor[] = {1.0f, 0.5f, 0.0f, 1.0f}; // Orange light
+
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT1);
 
     glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor);
     glLightfv(GL_LIGHT1, GL_SPECULAR, lightColor);
+
+    glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.0f);
+    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.1f);
+    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.01f);
 }
