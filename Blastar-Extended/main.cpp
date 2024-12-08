@@ -25,8 +25,12 @@ bool leftKeyPressed = false;
 bool rightKeyPressed = false;
 
 void display() {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    updatePlayerLight(player);
+    drawPlayerAura(player);
     drawPlayer(player, 180);
+    
     drawBullets(bullets);
     drawEnemies(enemies);
 
@@ -47,9 +51,10 @@ void timer(int value) {
 
     checkCollisions(bullets, enemies, explosions);
 
-    if (rand() % 100 < 5) {
+    if (rand() % 500 < 5) {
         spawnEnemy(enemies);
     }
+    updateGlowIntensity();
     glutPostRedisplay();
     glutTimerFunc(16, timer, 0);
 }

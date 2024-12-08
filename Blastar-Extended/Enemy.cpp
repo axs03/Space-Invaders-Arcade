@@ -31,16 +31,10 @@ void drawEnemies(const vector<Enemy>& enemies) {
 
     for (const auto& enemy : enemies) {
         if (!enemy.active) continue;
-
         glPushMatrix();
         
-        
         glTranslatef(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 0.0f);
-
-        // Rotate 180 degrees
-        glRotatef(180.0f, 0.0f, 0.0f, 1.0f);
-
-        
+        glRotatef(180.0f, 0.0f, 0.0f, 1.0f); // rotation
         glTranslatef(-enemy.width / 2, -enemy.height / 2, 0.0f);
 
         glBindTexture(GL_TEXTURE_2D, enemy.textureID);
