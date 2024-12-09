@@ -15,6 +15,7 @@ using namespace std;
 struct Projectile {
     float x, y, width, height;
     bool active;
+    float time;
 };
 
 void fireBullet(vector<Projectile>& bullets, float playerX, float playerY, float playerWidth);

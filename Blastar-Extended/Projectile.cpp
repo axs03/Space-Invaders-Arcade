@@ -11,14 +11,19 @@
 using namespace std;
 
 void fireBullet(vector<Projectile>& bullets, float playerX, float playerY, float playerWidth) {
-    Projectile bullet = {playerX + playerWidth / 2 - 5, playerY + 20, 10, 20, true};
+    Projectile bullet = {playerX + playerWidth / 2 - 5, playerY + 20, 10, 20, true, 0.0f};
     bullets.push_back(bullet);
 }
 
 void updateBullets(vector<Projectile>& bullets) {
     for (auto& bullet : bullets) {
         if (bullet.active) {
-            bullet.y += 5.0f;
+            bullet.time += 0.1f;
+            bullet.y += 5.0f; // go upwards
+
+            // sinusoidal motion to the x position
+            bullet.x += sin(bullet.time * 1.0f) * 1.4f; // freq adjustment
+
             if (bullet.y > 600.0f) bullet.active = false;
         }
     }
