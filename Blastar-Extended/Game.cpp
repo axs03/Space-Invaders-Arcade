@@ -19,7 +19,6 @@ void init(Player& player, vector<Enemy>& enemies) {
     glLoadIdentity();
     gluOrtho2D(0.0, 800.0, 0.0, 600.0);
     glEnable(GL_BLEND);
-    glEnable(GL_LIGHTING);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     

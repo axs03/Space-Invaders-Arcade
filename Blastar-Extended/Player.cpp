@@ -18,9 +18,6 @@ void drawPlayer(const Player& player, float rotationAngle) {
     glRotatef(rotationAngle, 0.0f, 0.0f, 1.0f);
     glTranslatef(-player.width / 2, -player.height / 2, 0.0f);
 
-    GLfloat emissionColor[] = {0.5f, 0.5f, 1.0f, 1.0f}; // Blue glow
-    glMaterialfv(GL_FRONT, GL_EMISSION, emissionColor);
-
     glBindTexture(GL_TEXTURE_2D, player.textureID);
 
     glBegin(GL_QUADS);
@@ -30,26 +27,8 @@ void drawPlayer(const Player& player, float rotationAngle) {
     glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, player.height);
     glEnd();
 
-    GLfloat noEmission[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    glMaterialfv(GL_FRONT, GL_EMISSION, noEmission);
-
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
-}
-
-
-void updatePlayerLight(const Player& player) {
-    GLfloat lightPos[] = {player.x + player.width / 2.0f, player.y + player.height / 2.0f, 1.0f, 1.0f};
-    GLfloat lightColor[] = {0.5f, 0.5f, 1.0f, 1.0f}; // Soft blue light
-    GLfloat ambientColor[] = {0.2f, 0.2f, 0.5f, 1.0f};
-
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT2); // Use a unique light slot
-
-    glLightfv(GL_LIGHT2, GL_POSITION, lightPos);
-    glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor);
-    glLightfv(GL_LIGHT2, GL_AMBIENT, ambientColor);
-    glLightfv(GL_LIGHT2, GL_SPECULAR, lightColor);
 }
 
 void movePlayer(Player& player, bool leftKeyPressed, bool rightKeyPressed) {
