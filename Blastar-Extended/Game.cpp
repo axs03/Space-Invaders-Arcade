@@ -42,6 +42,9 @@ void checkCollisions(vector<Projectile>& bullets, vector<Enemy>& enemies, vector
                 enemy.active = false;
 
                 explosions.push_back({enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 10.0f, true});
+
+                // screen shake effect
+                screenShakeTime = 0.5f; // shake duration
             }
         }
     }

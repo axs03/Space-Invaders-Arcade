@@ -14,6 +14,8 @@
 #include "Enemy.h"
 #include "Explosion.h"
 
+extern float screenShakeTime;
+
 using namespace std;
 
 void init(Player& player, vector<Enemy>& enemies);

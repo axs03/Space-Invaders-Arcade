@@ -23,7 +23,7 @@ vector<Explosion> explosions;
 bool leftKeyPressed = false;
 bool rightKeyPressed = false;
 
-
+float screenShakeTime = 0.0f;
 
 void timer(int value) {
     movePlayer(player, leftKeyPressed, rightKeyPressed);
@@ -54,6 +54,16 @@ void keyboardUp(unsigned char key, int x, int y) {
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPushMatrix(); // fixes viewport moving down after shake
+    
+    // screen shake effect
+    if (screenShakeTime > 0.0f) {
+        float shakeAmount = 5.0f; // shake intensity
+        float offsetX = (rand() % 100 / 100.0f - 0.5f) * shakeAmount;
+        float offsetY = (rand() % 100 / 100.0f - 0.5f) * shakeAmount;
+        glTranslatef(offsetX, offsetY, 0.0f);
+        screenShakeTime -= 0.016f;
+    }
     
     drawStars();
     updateStars();
@@ -66,10 +76,13 @@ void display() {
     for (const auto& explosion : explosions) {
         drawExplosion(explosion);
     }
+    glPopMatrix();
     glFlush();
 }
 
 int main(int argc, char** argv) {
+    srand(time(0));
+    
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(800, 600);
