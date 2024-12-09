@@ -23,6 +23,18 @@ void initStars(int numStars) {
         newStar.size = (rand() % 3 + 1) * 0.5f;
         stars.push_back(newStar);
     }
+    
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    // stars light properties
+    GLfloat light_position[] = { 400.0f, 300.0f, 1.0f, 1.0f };
+    GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 }
 
 
@@ -38,9 +50,8 @@ void updateStars() {
 
 
 void drawStars() {
-    glEnable(GL_POINT_SMOOTH);  // smooth points for better appearance
-
-    glPointSize(2.0f);  // point size for stars
+    glEnable(GL_POINT_SMOOTH);
+    glPointSize(2.0f);  // Point size for stars
 
     glBegin(GL_POINTS);
     for (const auto& star : stars) {
