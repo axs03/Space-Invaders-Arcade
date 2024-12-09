@@ -26,30 +26,27 @@ void updateEnemies(vector<Enemy>& enemies) {
 
 
 void drawEnemies(const vector<Enemy>& enemies) {
-    glEnable(GL_TEXTURE_2D);
-
     for (const auto& enemy : enemies) {
         if (!enemy.active) continue;
+
         glPushMatrix();
         
         glTranslatef(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 0.0f);
         glRotatef(180.0f, 0.0f, 0.0f, 1.0f); // rotation
         glTranslatef(-enemy.width / 2, -enemy.height / 2, 0.0f);
 
-        glBindTexture(GL_TEXTURE_2D, enemy.textureID);
-
         
+        glColor3f(1.0f, 0.0f, 0.0f); // Red color
+
         glBegin(GL_QUADS);
-        glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
-        glTexCoord2f(1.0f, 0.0f); glVertex2f(enemy.width, 0.0f);
-        glTexCoord2f(1.0f, 1.0f); glVertex2f(enemy.width, enemy.height);
-        glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, enemy.height);
+        glVertex2f(0.0f, 0.0f);
+        glVertex2f(enemy.width, 0.0f);
+        glVertex2f(enemy.width, enemy.height);
+        glVertex2f(0.0f, enemy.height);
         glEnd();
 
         glPopMatrix();
     }
-
-    glDisable(GL_TEXTURE_2D);
 }
 
 

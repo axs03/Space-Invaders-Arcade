@@ -21,11 +21,8 @@ void init(Player& player, vector<Enemy>& enemies) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    
     player.textureID = loadTexture("/Users/amansahu/Documents/Fall 2024/CMPSC 457/Final-Project/Blastar-Extended/Blastar-Extended/images/player_nobg.png");
-    for (auto& enemy : enemies) {
-        enemy.textureID = loadTexture("/Users/amansahu/Documents/Fall 2024/CMPSC 457/Final-Project/Blastar-Extended/Blastar-Extended/images/enemy_nobg.png");
-    }
+
 }
 
 

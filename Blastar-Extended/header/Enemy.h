@@ -17,7 +17,6 @@ using namespace std;
 struct Enemy {
     float x, y, width, height;
     bool active;
-    GLuint textureID;
 };
 
 void spawnEnemy(vector<Enemy>& enemies);
