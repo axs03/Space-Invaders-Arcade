@@ -11,7 +11,7 @@
 using namespace std;
 
 void fireBullet(vector<Projectile>& bullets, float playerX, float playerY, float playerWidth) {
-    Projectile bullet = {playerX + playerWidth / 2 - 5, playerY + 20, 5, 10, true};
+    Projectile bullet = {playerX + playerWidth / 2 - 5, playerY + 20, 10, 15, true, 0.0f, 0.0f};
     bullets.push_back(bullet);
 }
 
@@ -19,6 +19,7 @@ void updateBullets(vector<Projectile>& bullets) {
     for (auto& bullet : bullets) {
         if (bullet.active) {
             bullet.time += 0.1f;
+            bullet.flameTime += 0.1f; // flametime
             bullet.y += 5.0f; // go upwards
 
             // sinusoidal motion to the x position
@@ -53,6 +54,16 @@ void drawBullets(const vector<Projectile>& bullets) {
         glVertex2f(-bullet.width / 2, bullet.height / 2);
         glVertex2f(bullet.width / 2, bullet.height / 2);
         glVertex2f(0.0f, bullet.height);
+        glEnd();
+        
+        // flame effect
+        float flameSize = 10.0f + 5.0f * sin(bullet.flameTime * 10.0f); // Animate flame size
+        glColor4f(1.0f, 0.5f, 0.0f, 0.8f); // Orange color with transparency
+
+        glBegin(GL_TRIANGLES);
+        glVertex2f(-bullet.width / 4, -bullet.height / 2);
+        glVertex2f(bullet.width / 4, -bullet.height / 2);
+        glVertex2f(0.0f, -bullet.height / 2 - flameSize);
         glEnd();
 
         glPopMatrix();

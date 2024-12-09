@@ -16,6 +16,7 @@ struct Projectile {
     float x, y, width, height;
     bool active;
     float time;
+    float flameTime;
 };
 
 void fireBullet(vector<Projectile>& bullets, float playerX, float playerY, float playerWidth);
