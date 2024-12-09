@@ -11,7 +11,7 @@
 using namespace std;
 
 void fireBullet(vector<Projectile>& bullets, float playerX, float playerY, float playerWidth) {
-    Projectile bullet = {playerX + playerWidth / 2 - 5, playerY + 20, 10, 20, true, 0.0f};
+    Projectile bullet = {playerX + playerWidth / 2 - 5, playerY + 20, 5, 10, true};
     bullets.push_back(bullet);
 }
 
@@ -33,24 +33,29 @@ void drawBullets(const vector<Projectile>& bullets) {
     for (const auto& bullet : bullets) {
         if (!bullet.active) continue;
 
-        glColor4f(1.0, 1.0, 0.0, 0.5); // yellow
-        glBegin(GL_TRIANGLE_FAN);
-        glVertex2f(bullet.x + bullet.width / 2, bullet.y + bullet.height / 2);
-        for (int i = 0; i <= 20; ++i) {
-            float angle = i * 2.0f * 3.14159f / 20;
-            float radius = bullet.width * 1.5f;
-            glVertex2f(bullet.x + bullet.width / 2 + cos(angle) * radius,
-                       bullet.y + bullet.height / 2 + sin(angle) * radius);
-        }
+        glPushMatrix();
+        
+        glTranslatef(bullet.x + bullet.width / 2, bullet.y + bullet.height / 2, 0.0f);
+
+        // color for the missile body
+        glColor3f(0.8f, 0.8f, 0.8f); // Light gray color
+
+        glBegin(GL_QUADS);
+        glVertex2f(-bullet.width / 2, -bullet.height / 2);
+        glVertex2f(bullet.width / 2, -bullet.height / 2);
+        glVertex2f(bullet.width / 2, bullet.height / 2);
+        glVertex2f(-bullet.width / 2, bullet.height / 2);
         glEnd();
 
-        glColor3f(1.0, 0.0, 0.0); // red
-        glBegin(GL_QUADS);
-        glVertex2f(bullet.x, bullet.y);
-        glVertex2f(bullet.x + bullet.width, bullet.y);
-        glVertex2f(bullet.x + bullet.width, bullet.y + bullet.height);
-        glVertex2f(bullet.x, bullet.y + bullet.height);
+        glColor3f(1.0f, 0.0f, 0.0f); // red tip color
+
+        glBegin(GL_TRIANGLES);
+        glVertex2f(-bullet.width / 2, bullet.height / 2);
+        glVertex2f(bullet.width / 2, bullet.height / 2);
+        glVertex2f(0.0f, bullet.height);
         glEnd();
+
+        glPopMatrix();
     }
 }
 
